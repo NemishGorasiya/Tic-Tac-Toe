@@ -14,8 +14,12 @@ body {
     /* min-height: 100vh; */
     height: auto;
 }
+::selection {
+  color: #fff;
+  background-color: #000;
+}
 
-.choiceDialog , .twoPlayerNameDialog{
+.choiceDialog , .twoPlayerNameDialog, .resultDialog{
   position: absolute;
   top: 50%;
   left: 50%;
@@ -24,7 +28,7 @@ body {
   padding: 50px;
   border-radius: 15px;
   color: #fff;
-  width: auto;
+  width: 75%;
   max-width: 500px;
 }
 .choiceDialog h1 , .twoPlayerNameDialog h1{
@@ -35,6 +39,16 @@ body {
   display: flex;
   flex-direction: column;
 }
+.choiceDialog form .playModeChoices > * {
+  display: flex;
+  align-items: center;
+}
+.choiceDialog form .playModeChoices input[type="radio"]{
+  accent-color: grey;
+  height: 25px;
+  width: 25px;
+  margin-right: 7px;
+}
 .choiceDialog form .playModeChoices {
   display: flex;
   justify-content: space-around;
@@ -43,7 +57,7 @@ body {
 .choiceDialog form .playModeChoices .onePlayerContainer > * , .choiceDialog form .playModeChoices .twoPlayerContainer > *{
   cursor: pointer;
 }
-.choiceDialog form input[type="submit"] , .twoPlayerNameDialog form input[type="submit"]{
+.choiceDialog form input[type="submit"] , .twoPlayerNameDialog form input[type="submit"] , .resultDialog button{
   display: block;
   margin: auto;
   background: #000;
@@ -54,6 +68,12 @@ body {
   padding: 0 20px;
   font-size: 22px;
   cursor: pointer;
+  transition: all 0.5s ease;
+}
+.choiceDialog form input[type="submit"]:hover , .twoPlayerNameDialog form input[type="submit"]:hover , .resultDialog button:hover{
+  /* background: rgba(0, 0, 0, 0.6); */
+  background: #fff;
+  color: #000;
 }
 .main{
   min-height: 100vh;
@@ -64,6 +84,7 @@ body {
     background: #000;
     flex-direction: column;
     padding-top: 30px;
+    /* background: blueviolet; */
 }
 .main .mode h1{
     display: flex;
@@ -97,6 +118,7 @@ body {
   background: #fff;
   margin: 25px 0;
 }
+
 .main .board .boardCell {
     display: flex;
     justify-content: center;
@@ -118,6 +140,10 @@ body {
   text-align: center;
   margin: 0 25px;
   min-width: 150px;
+  /* text-overflow: ellipsis; */
+  /* white-space: nowrap; */
+  /* width: 200px; */
+  /* overflow: hidden; */
 }
 
 .twoPlayerNameDialog form input[type="text"] {
@@ -127,7 +153,34 @@ body {
   margin-bottom: 25px;
   border: none;
   border-radius: 5px;
-  font-size: 25px;
+  font-size: 18px;
   color: #000;
   padding: 0 20px;
+}
+.twoPlayerNameDialog form input[type="text"]:-webkit-autofill,
+.twoPlayerNameDialog form input[type="text"]:-webkit-autofill:hover,
+.twoPlayerNameDialog form input[type="text"]:-webkit-autofill:focus,
+.twoPlayerNameDialog form input[type="text"]:-webkit-autofill:active {
+    -webkit-text-fill-color: #000 !important;
+    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-size-adjust:none !important;
+    caret-color: #000;
+}
+.resultDialog {
+  text-align: center;
+  background: #fff;
+  color: #000;
+}
+.resultDialog img {
+  height: 150px;
+  width: 150px;
+}
+.resultDialog h1 {
+  margin-bottom: 25px;
+}
+.resultDialog button {
+  margin: 25px auto;
+  padding: 10px;
+  height: auto;
 }
