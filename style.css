@@ -14,8 +14,8 @@ body {
     /* min-height: 100vh; */
     height: auto;
 }
-::selection {
-  color: #fff;
+::selection:not(input){
+  color: #fff !important;
   background-color: #000;
 }
 
@@ -117,6 +117,66 @@ body {
   gap: 8px;
   background: #fff;
   margin: 25px 0;
+  position: relative;
+}
+.main .board::before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 8px;
+  background: #fff;
+  display: none;
+  /* left: 50%;
+  left: 15.2%;
+  left: 83%;
+  transform: rotate(90deg);
+  left: 50%;
+  top: -34%;
+  top: 34%; */
+  /* transform: rotate(45deg); */
+  /* left: 50%; */
+
+  /* transform: rotate(135deg);
+  left: 50%; */
+}
+.main .board.firstVertical::before{
+  display: block;
+  left: 15.2%;
+}
+.main .board.middleVertical::before{
+  display: block;
+  left: 50%;
+}
+.main .board.thirdVertical::before{
+  display: block;
+  left: 83%;
+}
+.main .board.firstHorizontal::before{
+  left: 50%;
+  transform: rotate(90deg);
+  display: block;
+  top: -34%;
+}
+.main .board.middleHorizontal::before{
+  left: 50%;
+  transform: rotate(90deg);
+  display: block;
+}
+.main .board.thirdHorizontal::before{
+  left: 50%;
+  transform: rotate(90deg);
+  display: block;
+  top: 34%;
+}
+.main .board.firstDiagonal::before{
+  transform: rotate(45deg);
+  display: block;
+  left: 50%;
+}
+.main .board.secondDiagonal::before{
+  transform: rotate(135deg);
+  display: block;
+  left: 50%;
 }
 
 .main .board .boardCell {

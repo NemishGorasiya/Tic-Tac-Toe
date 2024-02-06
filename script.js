@@ -9,7 +9,7 @@ let player1Score = document.getElementById("player1Score");
 let tieScore = document.getElementById("tieScore");
 let player2Score = document.getElementById("player2Score");
 
-
+let boardDiv = document.getElementById("board");
 
 let xORo = "X";
 let whoWon = "";
@@ -215,6 +215,44 @@ function openResultDialog(x){
         }
     }
 }
+function lineThrough(){
+  if (arr[0]===arr[1] && arr[1]==arr[2]) {
+    boardDiv.classList.add("firstHorizontal");
+  }else if(arr[3]===arr[4] && arr[4]==arr[5]){
+    boardDiv.classList.add("middleHorizontal");
+  }else if(arr[6]===arr[7] && arr[7]==arr[8]){
+    boardDiv.classList.add("thirdHorizontal");
+  }else if(arr[0]===arr[3] && arr[3]==arr[6]){
+    boardDiv.classList.add("firstVertical");
+  }else if(arr[1]===arr[4] && arr[4]==arr[7]){
+    boardDiv.classList.add("middleVertical");
+  }else if(arr[2]===arr[5] && arr[5]==arr[8]){
+    boardDiv.classList.add("thirdVertical");
+  }else if(arr[0]===arr[4] && arr[4]==arr[8]){
+    boardDiv.classList.add("secondDiagonal");
+  }else if(arr[2]===arr[4] && arr[4]==arr[6]){
+    boardDiv.classList.add("firstDiagonal");
+  }
+  setTimeout(()=>{
+    if (arr[0]===arr[1] && arr[1]==arr[2]) {
+      boardDiv.classList.remove("firstHorizontal");
+    }else if(arr[3]===arr[4] && arr[4]==arr[5]){
+      boardDiv.classList.remove("middleHorizontal");
+    }else if(arr[6]===arr[7] && arr[7]==arr[8]){
+      boardDiv.classList.remove("thirdHorizontal");
+    }else if(arr[0]===arr[3] && arr[3]==arr[6]){
+      boardDiv.classList.remove("firstVertical");
+    }else if(arr[1]===arr[4] && arr[4]==arr[7]){
+      boardDiv.classList.remove("middleVertical");
+    }else if(arr[2]===arr[5] && arr[5]==arr[8]){
+      boardDiv.classList.remove("thirdVertical");
+    }else if(arr[0]===arr[4] && arr[4]==arr[8]){
+      boardDiv.classList.remove("secondDiagonal");
+    }else if(arr[2]===arr[4] && arr[4]==arr[6]){
+      boardDiv.classList.remove("firstDiagonal");
+    }
+  },500);
+}
 function checkResult(board){
     if (isGameOver(board)) {
         // console.log("in the over");
@@ -222,10 +260,12 @@ function checkResult(board){
         // setTimeout(resetFun,500);
         if (isWinner(board, "o")) {
             // console.log("O won");
+            lineThrough();
             openResultDialog("O");
           return 1; // Computer wins
         } else if (isWinner(board, "x")) {
             // console.log("X won");
+            lineThrough();
             openResultDialog("X");
           return -1; // Player wins
         } else {
@@ -283,7 +323,7 @@ function findBestMove(board, player) {
 function isGameOver(board) {
   return !board.includes("a") || isWinner(board, "x") || isWinner(board, "o");
 }
-
+let winMove;
 function isWinner(board, player) {
   return winMoves.some((combination) =>
     combination.every((index) => board[index] === player)
