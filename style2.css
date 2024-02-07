@@ -1,0 +1,77 @@
+
+@media screen and (max-width: 600px) {
+    .main .board {
+        grid-template-columns: repeat(3, 80px);
+        grid-template-rows: repeat(3, 80px);
+      }
+      .main .scoreCard {
+          justify-content: space-around;
+          font-size: 13px;
+      }
+      .main .scoreCard .score{
+        min-width: 0;
+        /* background: red; */
+        margin: 0;
+      }
+      .main .mode h1 > span {
+        float: left;
+      }
+      .choiceDialog .playModeChoices {
+        flex-direction: column;
+        padding-left: 35px;
+      }
+      .choiceDialog .playModeChoices > * {
+        margin: 8px 0;
+      }
+      .main .board .boardCell {
+        font-size: 50px;
+        font-weight: 600;
+      }
+}
+
+@media screen and (max-width: 480px) {  
+    .choiceDialog , .twoPlayerNameDialog, .resultDialog{
+        padding: 10px;
+        width: auto;
+        max-width: 500px;
+        width: 90%;
+      }
+    .main .mode h1{
+        font-size: 30px;
+        padding: 8px;
+    }
+    
+    .main .mode h1 span{
+        padding: 5px 10px;
+        margin-left: 10px;
+        border-radius: 10px;
+        font-size: 12px;
+    }
+    .main .mode h1 span i {
+      font-size: 25px;
+    }
+    .choiceDialog .playModeChoices {
+        padding-left: 50px;
+      }
+      .main .board {
+        gap: 6px;
+      }
+      .main .board::before {
+        width: 6px;
+      }
+    
+}
+@media screen and (max-width: 280px) {  
+  .main .board {
+    grid-template-columns: repeat(3, 50px);
+    grid-template-rows: repeat(3, 50px);
+    gap: 3px;
+  }
+  .main .board::before {
+    width: 3px;
+  }
+  .main .board .boardCell {
+    font-size: 30px;
+    font-weight: 500;
+  }
+}

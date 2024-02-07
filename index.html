@@ -1,13 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-</head>
-<body>
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style2.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Tic-Tac-Toe</title>
+  </head>
+  <body>
+    <dialog id="choiceDialog" class="choiceDialog">
+      <h1>Tic-Tac-Toe</h1>
+      <form action="" onsubmit="play(event)">
+        <div class="playModeChoices">
+          <div class="onePlayerContainer">
+            <input
+              type="radio"
+              name="playMode"
+              id="onePlayer"
+              value="onePlayer"
+              checked
+            />
+            <label for="onePlayer">Play with computer</label>
+          </div>
+          <div class="twoPlayerContainer">
+            <input
+              type="radio"
+              name="playMode"
+              id="twoPlayer"
+              value="twoPlayer"
+            />
+            <label for="twoPlayer">Two player</label>
+          </div>
+        </div>
+        <input type="submit" value="Play Now" />
+      </form>
+    </dialog>
+    <div class="main" style="display: none;" id="main">
+        <div class="mode">
+            <h1>One Player<span onclick="choiceDialogOpen()"> <i class="fa-solid fa-user"></i>1p</span><span onclick="resetScore()"><i class="fa-solid fa-rotate"></i>Reset</span></h1>
+            <!-- <i class="fa-solid fa-user-group"></i> -->
+        </div>
+        <div class="board" id="board">
+            <div class="boardCell"></div>
+            <div class="boardCell"></div>
+            <div class="boardCell"></div>
+            <div class="boardCell"></div>
+            <div class="boardCell"></div>
+            <div class="boardCell"></div>
+            <div class="boardCell"></div>
+            <div class="boardCell"></div>
+            <div class="boardCell"></div>
+        </div>
+        <div class="scoreCard">
+            <div class="score player1Score" id="player1Score"><h3>YOU (X)</h3><h1>0</h1></div>
+            <div class="score tieScore" id="tieScore"><h3>TIE</h3><h1>0</h1></div>
+            <div class="score player2Score" id="player2Score"><h3>COMPUTER (O)</h3><h1>0</h1></div>
+        </div>
+    </div>
+<dialog id="twoPlayerNameDialog" class="twoPlayerNameDialog">
+    <h1>Two Player Game</h1>
+    <form action="" onsubmit="twoPlayerNameSubmit(event)">
+        <input type="text" name="player1name" id="player1Name" placeholder="Player1 name" required>
+        <input type="text" name="player2name" id="player2Name" placeholder="Player2 name" required>
+        <input type="submit" value="Play Now" />
+    </form>
+</dialog>
+<dialog style="display: none;" id="resultDialog" class="resultDialog">
+  <img src="./Assets/congrats.gif" alt="" srcset="">
+  <!-- <img src="./Assets/tie.png" alt="" srcset="">
+  <img src="./Assets/oops.png" alt="" srcset=""> -->
+  <h1>Hurre!</h1>
+  <h2>You won the match</h2>
+  <button onclick="resultDialogClose()">Start New Game</button>
+</dialog>
+    <script src="
+https://kit.fontawesome.com/f1d5fed0d8.js"
+crossorigin="anonymous"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
