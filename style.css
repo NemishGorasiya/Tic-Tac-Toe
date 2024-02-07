@@ -126,18 +126,6 @@ body {
   width: 8px;
   background: #fff;
   display: none;
-  /* left: 50%;
-  left: 15.2%;
-  left: 83%;
-  transform: rotate(90deg);
-  left: 50%;
-  top: -34%;
-  top: 34%; */
-  /* transform: rotate(45deg); */
-  /* left: 50%; */
-
-  /* transform: rotate(135deg);
-  left: 50%; */
 }
 .main .board.firstVertical::before{
   display: block;
@@ -145,7 +133,7 @@ body {
 }
 .main .board.middleVertical::before{
   display: block;
-  left: 50%;
+  left: 49%;
 }
 .main .board.thirdVertical::before{
   display: block;

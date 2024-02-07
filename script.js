@@ -26,7 +26,8 @@ let winMoves = [
 ];
 let count = 0;
 let playMode = "onePlayer";
-
+let computerFirst = true;
+let twoPlayerStart = 'X';
 let player1name = "";
 let player2name = "";
 let onePlayer = {
@@ -40,34 +41,63 @@ let twoPlayer = {
   player2: 0,
 };
 
+function disableClick(){
+  boardDiv.style.pointerEvents = "none";
+}
+function enableClick() {
+  boardDiv.style.pointerEvents = "auto";
+}
 
 const resetFun = () => {
   arr = ["a", "a", "a", "a", "a", "a", "a", "a", "a"];
-  xORo = "X";
+  // xORo = "X";
+  // console.log(xORo);
   count = 0;
   boardCells.forEach((ele) => {
     ele.innerHTML = "";
   });
+  computerFirst = (playMode === "onePlayer") ? !computerFirst : computerFirst;
+  if(computerFirst && playMode === "onePlayer"){
+    computerMove();
+    count=1;
+  }
+  if(!computerFirst && playMode === "onePlayer"){
+    xORo = 'O';
+  }
+  updateData();
 };
-
+function computerMove(){
+  let bestMoveIndex = findBestMove(arr, "o");
+                // console.log(bestMoveIndex);
+                setTimeout(()=>{ 
+                  xORo = "O";
+                  if (bestMoveIndex != -1) {
+                    bestMoveIndex=0;
+                      boardCells[bestMoveIndex].innerHTML = xORo;
+                  }
+                  arr[bestMoveIndex] = xORo.toLowerCase();
+                  // console.log("after", arr);
+                    checkResult(arr);
+                  count++;
+                },500)
+}
 const resetScore = () => {
-  if (playMode === "onePlayer") {
     onePlayer = {
       player1: 0,
       tied: 0,
       player2: 0,
     };
-  }else{
     twoPlayer = {
       player1: 0,
       tied: 0,
       player2: 0,
     };
-  }
-  updateData();
-  resetFun();
+    xORo = 'X';
+    computerFirst = true;
+    twoPlayerStart = 'X';
+    updateData();
+    resetFun();
 }
-// main.style.display = "flex";
 const choiceDialogOpen = () => {
   choiceDialog.showModal();
   main.style.display = "none";
@@ -82,46 +112,33 @@ const play = (e) => {
   choiceDialog.close();
   main.style.display = "flex";
   playMode = e.target.playMode.value;
+  resetScore();
   if (e.target.playMode.value === "twoPlayer") {
     twoPlayerNameDialogOpen();
     modeHeading.innerHTML = `Two Player <span onclick="choiceDialogOpen()"> <i class="fa-solid fa-user-group"></i>2p</span><span onclick="resetScore()"><i class="fa-solid fa-rotate"></i>Reset</span>`;
   } else {
     modeHeading.innerHTML = `One Player <span onclick="choiceDialogOpen()"> <i class="fa-solid fa-user"></i>1p</span><span onclick="resetScore()"><i class="fa-solid fa-rotate"></i>Reset</span>`;
   }
-  updateData();
 };
 const resultDialogClose = () => {
     resultDialog.style.display = "none";
     main.style.display = "flex";
+    enableClick();
     resetFun();
 }
 const twoPlayerNameSubmit = (e) => {
   e.preventDefault();
   main.style.display = "flex";
   twoPlayerNameDialog.close();
-  
-  if (
-      (e.target.player1name.value === player1name &&
-        e.target.player2name.value === player2name) ||
-        (e.target.player1name.value === player2name &&
-            e.target.player2name.value === player1name)
-            ) {
-            } else {
-                player1name = e.target.player1name.value;
-                player2name = e.target.player2name.value;
-                twoPlayer = {
-                    player1: 0,
-                    tied: 0,
-                    player2: 0,
-                };
-            }
-            updateData();
+  player1name = e.target.player1name.value;
+  player2name = e.target.player2name.value;
+  resetScore();
   boardCells.forEach((ele) => (ele.innerHTML = ""));
 };
 
 boardCells.forEach((ele, index) => {
   ele.addEventListener("click", () => {
-    if (playMode == "twoPlayer") {
+    if (playMode === "twoPlayer") {
       if (arr[index] === "a") {
         ele.innerHTML = xORo;
         arr[index] = xORo.toLowerCase();
@@ -135,19 +152,17 @@ boardCells.forEach((ele, index) => {
       }
     } else {
       if (arr[index] === "a") {
-        if (count == 0 || xORo == "O") {
+        if (xORo == "O") {
           xORo = "X";
           ele.innerHTML = xORo;
           arr[index] = xORo.toLowerCase();
           count++;
-          checkResult(arr);
+         let res = checkResult(arr);
             // console.log("before", arr);
-            if(count < 9){
-
+            if(res!== 1 && res!==-1 && res !==0){
                 let bestMoveIndex = findBestMove(arr, "o");
                 // console.log(bestMoveIndex);
-                setTimeout(()=>{
-                     
+                setTimeout(()=>{ 
                   xORo = "O";
                   if (bestMoveIndex != -1) {
                       boardCells[bestMoveIndex].innerHTML = xORo;
@@ -159,6 +174,8 @@ boardCells.forEach((ele, index) => {
                 },500)
             }
           
+        }else{
+
         }
       }
     }
@@ -167,52 +184,64 @@ boardCells.forEach((ele, index) => {
 
 
 function updateData() {
+  // console.log(onePlayer);
+  // console.log(twoPlayer);
     if (playMode === "onePlayer") {
         player1Score.innerHTML = `<h3>YOU (X)</h3><h1>${onePlayer.player1}</h1>`;
-        tieScore.innerHTML = `<h3>TIE (X)</h3><h1>${onePlayer.tied}</h1>`;
+        tieScore.innerHTML = `<h3>TIE</h3><h1>${onePlayer.tied}</h1>`;
         player2Score.innerHTML = `<h3>COMPUTER (O)</h3><h1>${onePlayer.player2}</h1>`;
       } else {
         player1Score.innerHTML = `<h3>${player1name} (X)</h3><h1>${twoPlayer.player1}</h1>`;
-        tieScore.innerHTML = `<h3>TIE (X)</h3><h1>${twoPlayer.tied}</h1>`;
+        tieScore.innerHTML = `<h3>TIE</h3><h1>${twoPlayer.tied}</h1>`;
         player2Score.innerHTML = `<h3>${player2name} (O)</h3><h1>${twoPlayer.player2}</h1>`;
       }
 }
 
 function openResultDialog(x){
+  // console.log("called");
     if (resultDialog !== null) {
         setTimeout(()=>{
             resultDialog.style.display = "block";
             main.style.display = "none";
-            updateData();
-        },700);
-        if(x === "O"){
+          },700);
+          if(x === "O"){
             if (playMode === "onePlayer") {
-                onePlayer.player2++;
+              onePlayer.player2++;
             }else{
-                twoPlayer.player2++;
+              twoPlayer.player2++;
             }
             resultDialog.innerHTML = `<img src="./Assets/${playMode === "onePlayer" ? "oops.png":"congrats.gif"}" alt="" srcset="">
             <h2>${playMode === "onePlayer" ? "Computer" : player2name} won the match</h2>
             <button onclick="resultDialogClose()">Start New Game</button>`;
-        }else if(x === "X"){
+          }else if(x === "X"){
             if (playMode === "onePlayer") {
-                onePlayer.player1++;
+              onePlayer.player1++;
             }else{
-                twoPlayer.player1++;
+              twoPlayer.player1++;
             }
             resultDialog.innerHTML = `<img src="./Assets/congrats.gif" alt="" srcset="">
             <h1>Hurre!</h1>
             <h2>${playMode === "onePlayer" ? "You" : player1name} won the match</h2>
             <button onclick="resultDialogClose()">Start New Game</button>`;
-        }else{
+          }else{
             if (playMode === "onePlayer") {
-                onePlayer.tied++;
+              onePlayer.tied++;
             }else{
-                twoPlayer.tied++;
+              twoPlayer.tied++;
             }
             resultDialog.innerHTML = `<img src="./Assets/tie.png" alt="" srcset="">
             <button onclick="resultDialogClose()">Start New Game</button>`;
-        }
+          }
+          if (playMode === "twoPlayer") {
+            if(twoPlayerStart === 'X') {
+              xORo = 'O';
+              twoPlayerStart = 'O';
+            }else{
+              xORo = 'X';
+              twoPlayerStart = 'X';
+            }
+          }
+          updateData();
     }
 }
 function lineThrough(){
@@ -255,8 +284,9 @@ function lineThrough(){
 }
 function checkResult(board){
     if (isGameOver(board)) {
+      disableClick();
         // console.log("in the over");
-        updateData();
+        // updateData();
         // setTimeout(resetFun,500);
         if (isWinner(board, "o")) {
             // console.log("O won");
